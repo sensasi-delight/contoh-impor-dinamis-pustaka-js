@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Transfer Uang melalui QR</title>
+
+	<script src="../assets/js/vendor/qrcode.min.js"></script>
+	<script src="../assets/js/vendor/html5-qrcode.min.js"></script>
+</head>
+
+<body>
+	<h1>Transfer Uang melalui QR</h1>
+
+	<div id="render-pindai-qr"></div>
+	<div id="render-tampilkan-qr"></div>
+
+	<p>Silahkan memilih aksi:</p>
+	<button id="tombol-pindai-qr">Pindai QR</button>
+	<Button id="tombol-tampilkan-qr">Tampilkan QR</Button>
+
+	<script>
+		// onclick tombol pindai qr
+		document.getElementById('tombol-pindai-qr').addEventListener('click', () => {
+			bersihkanKonten();
+
+			// pindai qr
+			new Html5QrcodeScanner(
+				'render-pindai-qr', { fps: 10, qrbox: 250 }).render(function (qrCodeMessage) {
+					console.log(`Hasil pindai: ${qrCodeMessage}`);
+				});
+		});
+
+		// onclick tombol tampilkan qr
+		document.getElementById('tombol-tampilkan-qr').addEventListener('click', () => {
+			bersihkanKonten();
+
+			// tampilkan qr
+			new QRCode(document.getElementById('render-tampilkan-qr'), '[contoh: id pengguna]');
+		});
+
+		// fungsi bersihkan konten
+		function bersihkanKonten() {
+			const renderPindaiQrDiv = document.getElementById('render-pindai-qr');
+			const renderTampilkanQrDiv = document.getElementById('render-tampilkan-qr');
+
+			renderPindaiQrDiv.innerHTML = '';
+			renderTampilkanQrDiv.innerHTML = '';
+		}
+	</script>
+</body>
+
+</html>
